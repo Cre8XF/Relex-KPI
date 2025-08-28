@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html lang="no">
+<html lang="no" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Relex Focus – produkter å se på</title>
+    <script>
+      (function () {
+        var KEY = 'relexTheme';
+        // valgfritt: la ?theme=light|dark i URLen overstyre
+        var q = new URLSearchParams(location.search).get('theme');
+        var initial =
+          (q === 'light' || q === 'dark') ? q :
+            (localStorage.getItem(KEY) ||
+              document.documentElement.getAttribute('data-theme') ||
+              'light'); // <- default
+        document.documentElement.setAttribute('data-theme', initial);
+        localStorage.setItem(KEY, initial);
+      })();
+    </script>
+
     <style>
       /* Tema-variabler */
      /* ========== Temaer ========== */
@@ -933,23 +948,24 @@
         applyFilters();
       }
       // ---------- Tema ----------
-      const THEME_KEY = 'relexTheme';
+     const THEME_KEY = 'relexTheme';
       function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem(THEME_KEY, theme);
         const btn = document.getElementById('themeToggle');
-        if (btn) btn.textContent = theme === 'light' ? '🌙 Mørk' : '☀️ Lys';
+        if (btn) btn.textContent = (theme === 'light') ? '🌙 Mørk' : '☀️ Lys';
       }
-      // init: bruk lagret tema, ellers systempreferanse
-      (function initTheme() {
-          const saved = localStorage.getItem('relexTheme');
-          applyTheme(saved || 'light');           // <- ignorer systempreferanse, start light
-        })();
 
+      // Ikke gjør ny autodeteksjon her – bruk det som allerede er satt i <head>
+      (function initTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        applyTheme(current);
+      })();
       document.getElementById('themeToggle')?.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme') || 'dark';
-        applyTheme(current === 'dark' ? 'light' : 'dark');
+        const cur = document.documentElement.getAttribute('data-theme') || 'light';
+        applyTheme(cur === 'dark' ? 'light' : 'dark');
       });
+
     </script>
   </body>
 </html>
