@@ -5,18 +5,47 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Relex Focus – produkter å se på</title>
     <style>
-      :root {
-        --bg: #0f172a;
-        --panel: #111827;
-        --ink: #e5e7eb;
-        --muted: #9ca3af;
-        --accent: #60a5fa;
-        --warn: #f59e0b;
-        --bad: #ef4444;
-        --good: #22c55e;
-        --grid: #223358;
-        --chip: #1f2937;
-      }
+      /* Tema-variabler */
+     /* ========== Temaer ========== */
+/* 1) "Midnight Navy" (mørkt, litt varmere blåtoner) */
+:root,
+[data-theme="dark"]{
+  --bg:   #26385c;   /* dyp marine */
+  --panel:#242f46;   /* kort/panel */
+  --ink:  #e6edf3;   /* hovedtekst */
+  --muted:#8aa0b6;   /* dempet tekst */
+  --accent:#8b5cf6;  /* fiolett aksent */
+  --warn: #f59e0b;
+  --bad:  #ef4444;
+  --good: #22c55e;
+  --grid: #1c2638;   /* linjer / border */
+  --chip: #0f1628;   /* pill/chip */
+
+  /* tag-badges (mørk) */
+  --tag-bad-bg:#28141a;  --tag-bad-border:#5a1e2b; --tag-bad-fg:#ffb4c8;
+  --tag-warn-bg:#2a2313; --tag-warn-border:#5a4520; --tag-warn-fg:#ffd38a;
+  --tag-good-bg:#0f2420; --tag-good-border:#1e4d43; --tag-good-fg:#b7ffcd;
+}
+
+/* 2) "Soft Slate" (lys, nøytral grå/blå – god arbeidstoner) */
+[data-theme="light"]{
+  --bg:   #f4f6f8;   /* lys blå-grå bakgrunn */
+  --panel:#ffffff;   /* hvitt panel */
+  --ink:  #111827;   /* mørk tekst */
+  --muted:#6b7280;   /* dempet tekst */
+  --accent:#6366f1;  /* indigo aksent */
+  --warn: #b45309;
+  --bad:  #b91c1c;
+  --good: #15803d;
+  --grid: #e5e7eb;   /* lyse gridlinjer */
+  --chip: #eef2ff;   /* chip-bakgrunn (indigo-50) */
+
+  /* tag-badges (lys) */
+  --tag-bad-bg:#fee2e2;  --tag-bad-border:#fecaca; --tag-bad-fg:#7f1d1d;
+  --tag-warn-bg:#fff7ed; --tag-warn-border:#ffedd5; --tag-warn-fg:#7c2d12;
+  --tag-good-bg:#ecfdf5; --tag-good-border:#d1fae5; --tag-good-fg:#064e3b;
+}
+
 
       html,
       body {
@@ -28,7 +57,7 @@
 
       header {
         padding: 16px 20px;
-        border-bottom: 1px solid #1f2937;
+        border-bottom: 1px solid var(--grid);
         display: flex;
         gap: 12px;
         align-items: center;
@@ -41,10 +70,10 @@
       }
 
       .drop {
-        border: 1px dashed #334155;
+        border: 1px dashed var(--grid);
         border-radius: 12px;
         padding: 16px;
-        background: #0b1222;
+        background: var(--panel);
         cursor: pointer;
       }
 
@@ -56,7 +85,7 @@
 
       .card {
         background: var(--panel);
-        border: 1px solid #1f2937;
+        border: 1px solid var(--grid);
         border-radius: 12px;
         padding: 12px;
       }
@@ -74,8 +103,8 @@
 
       input,
       select {
-        background: #0b1222;
-        border: 1px solid #1f2937;
+        background: var(--panel);
+        border: 1px solid var(--grid);
         color: var(--ink);
         border-radius: 10px;
         padding: 8px 10px;
@@ -89,7 +118,7 @@
         background: var(--chip);
         padding: 6px 10px;
         border-radius: 999px;
-        border: 1px solid #1f2937;
+        border: 1px solid var(--grid);
       }
 
       table {
@@ -100,7 +129,7 @@
       th,
       td {
         padding: 8px 10px;
-        border-bottom: 1px solid #1f2937;
+        border-bottom: 1px solid var(--grid);
         text-align: left;
         vertical-align: middle;
       }
@@ -108,8 +137,8 @@
       th {
         position: sticky;
         top: 0;
-        background: #0b1222;
-        border-bottom: 1px solid #223358;
+        background: var(--panel);
+        border-bottom: 1px solid var(--grid);
         font-weight: 600;
       }
 
@@ -131,25 +160,25 @@
         font-size: 12px;
         padding: 2px 8px;
         border-radius: 999px;
-        border: 1px solid #2a364f;
+        border: 1px solid var(--grid);
       }
 
       .tag.bad {
-        background: #2a1420;
-        border-color: #5f2139;
-        color: #ffb4c8;
+        background: var(--tag-bad-bg);
+        border-color: var(--tag-bad-border);
+        color: var(--tag-bad-fg);
       }
 
       .tag.warn {
-        background: #2a2313;
-        border-color: #4f4221;
-        color: #ffd38a;
+        background: var(--tag-warn-bg);
+        border-color: var(--tag-warn-border);
+        color: var(--tag-warn-fg);
       }
 
       .tag.good {
-        background: #102517;
-        border-color: #1e4d33;
-        color: #b7ffcd;
+        background: var(--tag-good-bg);
+        border-color: var(--tag-good-border);
+        color: var(--tag-good-fg);
       }
 
       .btn {
@@ -186,8 +215,8 @@
       }
 
       details {
-        border: 1px solid #1f2937;
-        background: #0b1222;
+        border: 1px solid var(--grid);
+        background: var(--panel);
         border-radius: 12px;
         padding: 10px;
       }
@@ -200,7 +229,6 @@
         margin-top: 12px;
       }
 
-      /* Pivot */
       .pivotHeader {
         display: flex;
         gap: 10px;
@@ -217,14 +245,10 @@
       }
 
       .chipBtn {
-        background: #0b1222;
-        border: 1px solid #1f2937;
+        background: var(--panel);
+        border: 1px solid var(--grid);
         border-radius: 999px;
         padding: 6px 10px;
-      }
-
-      .chipBtn strong {
-        font-weight: 600;
       }
 
       .clickable {
@@ -232,7 +256,7 @@
       }
 
       .clickable:hover {
-        background: #0b1222;
+        background: rgba(0, 0, 0, 0.03);
       }
     </style>
   </head>
@@ -303,6 +327,10 @@
           <div class="right">
             <label>&nbsp;</label><br />
             <button id="btnExport" class="btn" disabled>Eksporter utsnitt (CSV)</button>
+          </div>
+          <div>
+            <label>Tema</label><br />
+            <button id="themeToggle" class="btn secondary" type="button" title="Bytt mellom mørkt og lyst">☀️ Lys</button>
           </div>
         </div>
       </div>
@@ -711,11 +739,11 @@
           if (supplierFilter) {
             lab.textContent = `${supplierFilter.SuppName} (${supplierFilter.SuppCode})`;
             chip.hidden = false;
-            chip.style.display = 'flex';      // ← tving visning
+            chip.style.display = 'flex'; // ← tving visning
           } else {
             lab.textContent = '';
             chip.hidden = true;
-            chip.style.display = 'none';      // ← tving skjuling
+            chip.style.display = 'none'; // ← tving skjuling
           }
         }
       } // <-- Add this closing brace to properly end the render() function
@@ -797,56 +825,56 @@
         }
       }
 
-     // Sortering i pivot-header
+      // Sortering i pivot-header
       document.querySelectorAll('#tblPivot thead th.clickable').forEach(th => {
         th.addEventListener('click', () => {
           const k = th.getAttribute('data-k');
           if (pivotSortKey === k) pivotSortDir = pivotSortDir === 1 ? -1 : 1;
-          else { pivotSortKey = k; pivotSortDir = 1; }
+          else {
+            pivotSortKey = k;
+            pivotSortDir = 1;
+          }
           renderPivot(data.rows.map(mapRowFactory(data.headers)));
         });
       });
 
       // Oppdater pivot ved søk / scope
-      document.getElementById('pivotQ').addEventListener('input', () =>
-        renderPivot(data.rows.map(mapRowFactory(data.headers)))
-      );
-      document.getElementById('pivotScope').addEventListener('input', () =>
-        renderPivot(data.rows.map(mapRowFactory(data.headers)))
-      );
+      document.getElementById('pivotQ').addEventListener('input', () => renderPivot(data.rows.map(mapRowFactory(data.headers))));
+      document.getElementById('pivotScope').addEventListener('input', () => renderPivot(data.rows.map(mapRowFactory(data.headers))));
 
       // --- Fjern leverandørfilter (robust + delegasjon) ---
       function clearSupplierFilter(e) {
-          if (e) e.preventDefault();
+        if (e) e.preventDefault();
 
-          // 1) Nullstill valgt leverandør
-          supplierFilter = null;
+        // 1) Nullstill valgt leverandør
+        supplierFilter = null;
 
-          // 2) Tøm søkefeltene
-          const pq = document.getElementById('pivotQ'); if (pq) pq.value = '';
-          const gq = document.getElementById('q'); if (gq) gq.value = '';
+        // 2) Tøm søkefeltene
+        const pq = document.getElementById('pivotQ');
+        if (pq) pq.value = '';
+        const gq = document.getElementById('q');
+        if (gq) gq.value = '';
 
-          // 3) Skjul chip umiddelbart (pluss i render())
-          const chip = document.getElementById('supplierChip');
-          const lab = document.getElementById('supplierLabel');
-          if (lab) lab.textContent = '';
-          if (chip) { chip.hidden = true; chip.style.display = 'none'; }
-
-          // 4) Bygg alt på nytt
-          applyFilters();
+        // 3) Skjul chip umiddelbart (pluss i render())
+        const chip = document.getElementById('supplierChip');
+        const lab = document.getElementById('supplierLabel');
+        if (lab) lab.textContent = '';
+        if (chip) {
+          chip.hidden = true;
+          chip.style.display = 'none';
         }
 
-        // Direkte lytter + delegasjon
-        const clearBtn = document.getElementById('clearSupplier');
-        if (clearBtn) clearBtn.addEventListener('click', clearSupplierFilter);
-        document.addEventListener('click', (ev) => {
-          const btn = ev.target.closest && ev.target.closest('#clearSupplier');
-          if (btn) clearSupplierFilter(ev);
-        });
-  
+        // 4) Bygg alt på nytt
+        applyFilters();
+      }
 
-
-
+      // Direkte lytter + delegasjon
+      const clearBtn = document.getElementById('clearSupplier');
+      if (clearBtn) clearBtn.addEventListener('click', clearSupplierFilter);
+      document.addEventListener('click', ev => {
+        const btn = ev.target.closest && ev.target.closest('#clearSupplier');
+        if (btn) clearSupplierFilter(ev);
+      });
 
       /* ---------- Export ---------- */
       function exportCSV() {
@@ -895,14 +923,33 @@
       document.getElementById('btnExport').addEventListener('click', exportCSV);
 
       async function load(f) {
-          drop.innerHTML = `<span class="pill">Lastet: ${f.name}</span>`;
-          const pq = document.getElementById('pivotQ'); if (pq) pq.value = '';
-          const gq = document.getElementById('q'); if (gq) gq.value = '';
-          data = await readFile(f);
-          supplierFilter = null;
-          applyFilters();
-        }
-
+        drop.innerHTML = `<span class="pill">Lastet: ${f.name}</span>`;
+        const pq = document.getElementById('pivotQ');
+        if (pq) pq.value = '';
+        const gq = document.getElementById('q');
+        if (gq) gq.value = '';
+        data = await readFile(f);
+        supplierFilter = null;
+        applyFilters();
+      }
+      // ---------- Tema ----------
+      const THEME_KEY = 'relexTheme';
+      function applyTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem(THEME_KEY, theme);
+        const btn = document.getElementById('themeToggle');
+        if (btn) btn.textContent = theme === 'light' ? '🌙 Mørk' : '☀️ Lys';
+      }
+      // init: bruk lagret tema, ellers systempreferanse
+      (function initTheme() {
+        const saved = localStorage.getItem(THEME_KEY);
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(saved || (prefersDark ? 'dark' : 'light'));
+      })();
+      document.getElementById('themeToggle')?.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme') || 'dark';
+        applyTheme(current === 'dark' ? 'light' : 'dark');
+      });
     </script>
   </body>
 </html>
