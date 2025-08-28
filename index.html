@@ -273,11 +273,11 @@
         <div class="row" style="gap: 8px">
           <div>
             <label>Maks. hylle-servicegrad (%)</label><br />
-            <input id="maxAvail" type="number" step="0.1" value="95" />
+            <input id="maxAvail" type="number" step="0.1" value="" />
           </div>
           <div>
             <label>Min. salgsverdi (kr)</label><br />
-            <input id="minSales" type="number" step="1000" value="50000" />
+            <input id="minSales" type="number" step="1000" value="" />
           </div>
           <div>
             <label>ABC filter</label><br />
@@ -942,10 +942,10 @@
       }
       // init: bruk lagret tema, ellers systempreferanse
       (function initTheme() {
-        const saved = localStorage.getItem(THEME_KEY);
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        applyTheme(saved || (prefersDark ? 'dark' : 'light'));
-      })();
+          const saved = localStorage.getItem('relexTheme');
+          applyTheme(saved || 'light');           // <- ignorer systempreferanse, start light
+        })();
+
       document.getElementById('themeToggle')?.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme') || 'dark';
         applyTheme(current === 'dark' ? 'light' : 'dark');
