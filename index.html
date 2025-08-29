@@ -1,154 +1,178 @@
 <!DOCTYPE html>
-<html lang="no" data-theme="dark">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Relex Focus – produkter å se på</title>
-    <link rel="stylesheet" href="styles.css">
-  <script>(function () {
+<html lang="no" data-theme="dark" data-lang="no">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-i18n="app.title">Relex Focus – produkter å se på</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      // --- tema fra før ---
       var KEY = 'relexTheme';
-      // Valgfritt: overstyr med ?theme=light|dark
-      var q = new URLSearchParams(location.search).get('theme');
-      var initial =
-        (q === 'light' || q === 'dark') ? q :
-          (localStorage.getItem(KEY) ||
-            document.documentElement.getAttribute('data-theme') ||
-            'dark'); // ← default endret til dark
+      var qTheme = new URLSearchParams(location.search).get('theme');
+      var initial = (qTheme === 'light' || qTheme === 'dark') ? qTheme :
+        (localStorage.getItem(KEY) ||
+          document.documentElement.getAttribute('data-theme') ||
+          'dark');
       document.documentElement.setAttribute('data-theme', initial);
       localStorage.setItem(KEY, initial);
-    })();</script>
-  </head>
 
-  <body>
-    <header class="row">
-      <h1>Relex Focus</h1>
-      <div id="drop" class="drop" tabindex="0" title="Klikk for å velge fil eller dra-og-slipp hit">
-        Dra-og-slipp Relex-eksport (CSV eller HTML) hit – eller klikk
-        <input id="file" type="file" accept=".csv,.html,.htm,text/csv,text/html" style="display: none" />
+      // --- språk: hent fra ?lang=, localStorage, eller html[data-lang] ---
+      var LKEY = 'relexLang';
+      var qLang = new URLSearchParams(location.search).get('lang');
+      var lang = (qLang && ['no', 'sv', 'en'].includes(qLang)) ? qLang :
+        (localStorage.getItem(LKEY) || document.documentElement.getAttribute('data-lang') || 'no');
+      document.documentElement.setAttribute('data-lang', lang);
+      document.documentElement.lang = lang;
+      localStorage.setItem(LKEY, lang);
+    })();
+  </script>
+</head>
+
+<body>
+  <header class="row">
+    <h1 data-i18n="app.h1">Relex Focus</h1>
+
+    <div class="row" style="gap:8px; align-items:center">
+      <div id="drop" class="drop" tabindex="0" title="" data-i18n-title="drop.title">
+        <span data-i18n="drop.text">Dra-og-slipp Relex-eksport (CSV eller HTML) hit – eller klikk</span>
+        <input id="file" type="file" accept=".csv,.html,.htm,text/csv,text/html" style="display:none" />
       </div>
 
+      <!-- Språkvelger -->
+      <label class="muted" for="langSel" data-i18n="lang.label">Språk</label>
+      <select id="langSel" title="Language">
+        <option value="no">Norsk</option>
+        <option value="sv">Svenska</option>
+        <option value="en">English</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <div class="row" style="gap: 8px">
+        <div>
+          <label data-i18n="filters.maxAvail.label">Maks. hylle-servicegrad (%)</label><br />
+          <input id="maxAvail" type="number" step="0.1" value="" title="" data-i18n-title="filters.maxAvail.title"
+            placeholder="" data-i18n-ph="filters.maxAvail.ph" />
+        </div>
+        <div>
+          <label data-i18n="filters.minSales.label">Min. salgsverdi (kr)</label><br />
+          <input id="minSales" type="number" step="1000" value="" title="" data-i18n-title="filters.minSales.title"
+            placeholder="" data-i18n-ph="filters.minSales.ph" />
+        </div>
+        <div>
+          <label data-i18n="filters.abc.label">ABC filter</label><br />
+          <select id="abc" title="" data-i18n-title="filters.abc.title">
+            <option value="" data-i18n="common.all">Alle</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>#</option>
+          </select>
+        </div>
+        <div>
+          <label data-i18n="filters.xyz.label">XYZ filter</label><br />
+          <select id="xyz" title="" data-i18n-title="filters.xyz.title">
+            <option value="" data-i18n="common.all">Alle</option>
+            <option>X</option>
+            <option>Y</option>
+            <option>Z</option>
+            <option>#</option>
+          </select>
+        </div>
+        <div>
+          <label data-i18n="filters.search.label">Søk (navn/kode/lev.)</label><br />
+          <input id="q" type="search" placeholder="" data-i18n-ph="filters.search.ph" />
+        </div>
+        <div>
+          <label data-i18n="filters.mode.label">Kriterier</label><br />
+          <select id="mode" title="" data-i18n-title="filters.mode.title">
+            <option value="both" data-i18n="filters.mode.both">Begge (lav hylle OG høy salg)</option>
+            <option value="either" data-i18n="filters.mode.either">Minst ett (lav hylle ELLER høy salg)</option>
+            <option value="hylle" data-i18n="filters.mode.hylle">Kun lav hylle</option>
+            <option value="salg" data-i18n="filters.mode.salg">Kun høy salg</option>
+          </select>
+        </div>
+        <div>
+          <label data-i18n="filters.region.label">Lokasjon (fra Lev.kode)</label><br />
+          <select id="region" title="" data-i18n-title="filters.region.title">
+            <option value="" data-i18n="common.all">Alle</option>
+            <option value="NO2" data-i18n="region.no2">Vestby (NO2-)</option>
+            <option value="SE1" data-i18n="region.se1">Örebro (SE1-)</option>
+            <option value="OTHER" data-i18n="region.other">Andre/ukjent</option>
+          </select>
+        </div>
+        <div class="right">
+          <label>&nbsp;</label><br />
+          <button id="btnExport" class="btn" disabled data-i18n="actions.export">Eksporter utsnitt (CSV)</button>
+        </div>
+        <div>
+          <label data-i18n="theme.label">Tema</label><br />
+          <button id="themeToggle" class="btn secondary" type="button" title="" data-i18n-title="theme.title">☀️
+            Lys</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- KPI-er -->
+  <main style="padding: 12px 16px">
+    <div class="kpi">
       <div class="card">
-        <div class="row" style="gap: 8px">
-          <div>
-            <label>Maks. hylle-servicegrad (%)</label><br />
-            <input id="maxAvail" type="number" step="0.1" value="" title="Maksimal hylle-servicegrad i prosent" placeholder="f.eks. 98.5" />
-          </div>
-          <div>
-            <label>Min. salgsverdi (kr)</label><br />
-            <input id="minSales" type="number" step="1000" value="" title="Minimum salgsverdi i kroner" placeholder="f.eks. 10000" />
-          </div>
-          <div>
-            <label>ABC filter</label><br />
-            <select id="abc" title="ABC filter">
-              <option value="">Alle</option>
-              <option>A</option>
-              <option>B</option>
-              <option>C</option>
-              <option>#</option>
-            </select>
-          </div>
-          <div>
-            <label>XYZ filter</label><br />
-            <select id="xyz" title="XYZ filter">
-              <option value="">Alle</option>
-              <option>X</option>
-              <option>Y</option>
-              <option>Z</option>
-              <option>#</option>
-            </select>
-          </div>
-          <div>
-            <label>Søk (navn/kode/lev.)</label><br />
-            <input id="q" type="search" placeholder="f.eks. H7, kabel, 7400…, EXIDE, SE1-7270150" />
-          </div>
-          <div>
-            <label>Kriterier</label><br />
-            <select id="mode" title="Kriterier">
-              <option value="both">Begge (lav hylle OG høy salg)</option>
-              <option value="either">Minst ett (lav hylle ELLER høy salg)</option>
-              <option value="hylle">Kun lav hylle</option>
-              <option value="salg">Kun høy salg</option>
-            </select>
-          </div>
-
-          <!-- NYTT: Lokasjonsfilter -->
-          <div>
-            <label>Lokasjon (fra Lev.kode)</label><br />
-            <select id="region" title="Lokasjon (fra Lev.kode)">
-              <option value="">Alle</option>
-              <option value="NO2">Vestby (NO2-)</option>
-              <option value="SE1">Örebro (SE1-)</option>
-              <option value="OTHER">Andre/ukjent</option>
-            </select>
-          </div>
-
-          <div class="right">
-            <label>&nbsp;</label><br />
-            <button id="btnExport" class="btn" disabled>Eksporter utsnitt (CSV)</button>
-          </div>
-          <div>
-            <label>Tema</label><br />
-            <button id="themeToggle" class="btn secondary" type="button" title="Bytt mellom mørkt og lyst">☀️ Lys</button>
-          </div>
-        </div>
+        <div class="muted" data-i18n="kpi.total">Rader (totalt)</div>
+        <div id="kTotal" style="font-size:20px">–</div>
       </div>
-    </header>
+      <div class="card">
+        <div class="muted" data-i18n="kpi.filtered">Rader (filtrert)</div>
+        <div id="kShown" style="font-size:20px">–</div>
+      </div>
+      <div class="card">
+        <div class="muted" data-i18n="kpi.avgAvail">Snitt servicegrad (filtrert)</div>
+        <div id="kAvgA" style="font-size:20px">–</div>
+      </div>
+      <div class="card">
+        <div class="muted" data-i18n="kpi.avgTurns">Snitt lageromløp (filtrert)</div>
+        <div id="kAvgT" style="font-size:20px">–</div>
+      </div>
+      <div class="card">
+        <div class="muted" data-i18n="kpi.sumSales">Sum salgsverdi (filtrert)</div>
+        <div id="kSumS" style="font-size:20px">–</div>
+      </div>
+    </div>
 
-    <main style="padding: 12px 16px">
-      <!-- KPI-er -->
-      <div class="kpi">
-        <div class="card">
-          <div class="muted">Rader (totalt)</div>
-          <div id="kTotal" style="font-size: 20px">–</div>
-        </div>
-        <div class="card">
-          <div class="muted">Rader (filtrert)</div>
-          <div id="kShown" style="font-size: 20px">–</div>
-        </div>
-        <div class="card">
-          <div class="muted">Snitt servicegrad (filtrert)</div>
-          <div id="kAvgA" style="font-size: 20px">–</div>
-        </div>
-        <div class="card">
-          <div class="muted">Snitt lageromløp (filtrert)</div>
-          <div id="kAvgT" style="font-size: 20px">–</div>
-        </div>
-        <div class="card">
-          <div class="muted">Sum salgsverdi (filtrert)</div>
-          <div id="kSumS" style="font-size: 20px">–</div>
-        </div>
+    <!-- Pivot -->
+    <div class="pivotHeader">
+      <strong data-i18n="pivot.title">Leverandører (pivot)</strong>
+      <label for="pivotScope" class="visually-hidden" data-i18n="pivot.scopeLabel">Pivotgrunnlag</label>
+      <select id="pivotScope" title="" data-i18n-title="pivot.scopeTitle">
+        <option value="filtered" data-i18n="pivot.scope.filtered">Pivotgrunnlag: Kun filtrerte</option>
+        <option value="all" data-i18n="pivot.scope.all">Pivotgrunnlag: Alle produkter</option>
+      </select>
+      <input id="pivotQ" type="search" placeholder="" data-i18n-ph="pivot.searchPh" />
+      <div class="chipFilter" id="supplierChip" hidden>
+        <span class="chipBtn"><strong data-i18n="pivot.filter">Filter:</strong> <span id="supplierLabel"></span></span>
+        <button id="clearSupplier" class="btn secondary" type="button" data-i18n="actions.clearFilter">Fjern
+          filter</button>
       </div>
+    </div>
 
-      <!-- Leverandør-pivot -->
-      <div class="pivotHeader">
-        <strong>Leverandører (pivot)</strong>
-        <label for="pivotScope" class="visually-hidden">Pivotgrunnlag</label>
-        <select id="pivotScope" title="Velg pivotgrunnlag">
-          <option value="filtered">Pivotgrunnlag: Kun filtrerte</option>
-          <option value="all">Pivotgrunnlag: Alle produkter</option>
-        </select>
-        <input id="pivotQ" type="search" placeholder="Søk leverandørnavn / -kode" />
-        <div class="chipFilter" id="supplierChip" hidden>
-          <span class="chipBtn"><strong>Filter:</strong> <span id="supplierLabel"></span></span>
-          <button id="clearSupplier" class="btn secondary" type="button">Fjern filter</button>
-        </div>
-      </div>
-      <div class="card fit" id="pivotCard">
-        <table id="tblPivot">
-          <thead>
-            <tr>
-              <th class="clickable" data-k="SuppName">Leverandør</th>
-              <th class="clickable" data-k="SuppCode">Lev.kode</th>
-              <th class="clickable" data-k="count">Produkter</th>
-              <th class="clickable" data-k="avgAvail">Snitt hylle-%</th>
-              <th class="clickable" data-k="avgTurns">Snitt omløp</th>
-              <th class="clickable" data-k="sumSales">Sum salg</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div class="hint">Klikk på en leverandør for å vise produktene under.</div>
-      </div>
+    <div class="card fit" id="pivotCard">
+      <table id="tblPivot">
+        <thead>
+          <tr>
+            <th class="clickable" data-k="SuppName" data-i18n="tblPivot.supplier">Leverandør</th>
+            <th class="clickable" data-k="SuppCode" data-i18n="tblPivot.code">Lev.kode</th>
+            <th class="clickable" data-k="count" data-i18n="tblPivot.products">Produkter</th>
+            <th class="clickable" data-k="avgAvail" data-i18n="tblPivot.avgAvail">Snitt hylle-%</th>
+            <th class="clickable" data-k="avgTurns" data-i18n="tblPivot.avgTurns">Snitt omløp</th>
+            <th class="clickable" data-k="sumSales" data-i18n="tblPivot.sumSales">Sum salg</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="hint" data-i18n="pivot.hint">Klikk på en leverandør for å vise produktene under.</div>
+    </div>
 
       <!-- Ingen treff / kolonnekart -->
       <details class="help" id="help" hidden>
@@ -185,10 +209,12 @@
           </thead>
           <tbody></tbody>
         </table>
-        <div class="hint">Tips: Klikk på kolonne-overskrifter for å sortere.</div>
+        <div class="hint" data-i18n="tbl.hint">Tips: Klikk på kolonne-overskrifter for å sortere.</div>
       </div>
-    </main>
-<script src="main.js"></script>
-
-  </body>
-</html>
+      </main>
+      
+      <!-- i18n må komme før main.js -->
+      <script src="main.js"></script>
+      </body>
+      
+      </html>
