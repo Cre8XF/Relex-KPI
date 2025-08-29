@@ -28,7 +28,7 @@
 
 /* 2) "Soft Slate" (lys, nøytral grå/blå – god arbeidstoner) */
 [data-theme='light'] {
-  --bg: #f4f6f8; /* lys blå-grå bakgrunn */
+  --bg: #bed0e2; /* lys blå-grå bakgrunn */
   --panel: #ffffff; /* hvitt panel */
   --ink: #111827; /* mørk tekst */
   --muted: #6b7280; /* dempet tekst */
@@ -40,13 +40,13 @@
   --chip: #eef2ff; /* chip-bakgrunn (indigo-50) */
 
   /* tag-badges (lys) */
-  --tag-bad-bg: #fee2e2;
+  --tag-bad-bg: #f0c4c4;
   --tag-bad-border: #fecaca;
-  --tag-bad-fg: #7f1d1d;
-  --tag-warn-bg: #fff7ed;
+  --tag-bad-fg: #260505;
+  --tag-warn-bg: #e3de3a;
   --tag-warn-border: #ffedd5;
   --tag-warn-fg: #7c2d12;
-  --tag-good-bg: #ecfdf5;
+  --tag-good-bg: #96dfbd;
   --tag-good-border: #d1fae5;
   --tag-good-fg: #064e3b;
 }
