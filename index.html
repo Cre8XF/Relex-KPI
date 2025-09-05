@@ -53,14 +53,35 @@
       <div class="row" style="gap: 8px">
         <div>
           <label data-i18n="filters.maxAvail.label">Maks. hylle-servicegrad (%)</label><br />
-          <input id="maxAvail" type="number" step="0.1" value="" title="" data-i18n-title="filters.maxAvail.title"
+          <input id="maxAvail" type="number" step="0.1" value="95" title="" data-i18n-title="filters.maxAvail.title"
             placeholder="" data-i18n-ph="filters.maxAvail.ph" />
         </div>
         <div>
           <label data-i18n="filters.minSales.label">Min. salgsverdi (kr)</label><br />
-          <input id="minSales" type="number" step="1000" value="" title="" data-i18n-title="filters.minSales.title"
+          <input id="minSales" type="number" step="1000" value="10000" title="" data-i18n-title="filters.minSales.title"
             placeholder="" data-i18n-ph="filters.minSales.ph" />
         </div>
+
+        <div>
+          <label data-i18n="filters.minQty.label">Min. salgsantall</label><br />
+          <input id="minQty" type="number" step="1" value="" title="" data-i18n-title="filters.minQty.title" placeholder=""
+            data-i18n-ph="filters.minQty.ph" />
+        </div>
+        <div>
+          <label data-i18n="filters.minUnits.label">Min. beholdning (stk)</label><br />
+          <input id="minUnits" type="number" step="1" value="" title="" data-i18n-title="filters.minUnits.title" placeholder=""
+            data-i18n-ph="filters.minUnits.ph" />
+        </div>
+        <div>
+          <label for="onlySO" data-i18n="filters.onlySO.label">Stockouts</label><br />
+          <label class="pill">
+            <input id="onlySO" type="checkbox" />
+            <span data-i18n="filters.onlySO.text">Kun rader med stockout</span>
+
+          </label>
+        </div>
+
+
         <div>
           <label data-i18n="filters.abc.label">ABC filter</label><br />
           <select id="abc" title="" data-i18n-title="filters.abc.title">
@@ -89,7 +110,7 @@
           <label data-i18n="filters.mode.label">Kriterier</label><br />
           <select id="mode" title="" data-i18n-title="filters.mode.title">
             <option value="both" data-i18n="filters.mode.both">Begge (lav hylle OG høy salg)</option>
-            <option value="either" data-i18n="filters.mode.either">Minst ett (lav hylle ELLER høy salg)</option>
+            <option value="either" data-i18n="filters.mode.either" selected>Minst ett (lav hylle ELLER høy salg)</option>
             <option value="hylle" data-i18n="filters.mode.hylle">Kun lav hylle</option>
             <option value="salg" data-i18n="filters.mode.salg">Kun høy salg</option>
           </select>
@@ -212,9 +233,15 @@
         <div class="hint" data-i18n="tbl.hint">Tips: Klikk på kolonne-overskrifter for å sortere.</div>
       </div>
       </main>
-      
-      <!-- i18n må komme før main.js -->
-      <script src="main.js"></script>
+
+      <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+      <script defer src="history-charts.js?v=1"></script>
+
+
+      <!-- i18n må komme før app.js -->
+      <script defer src="main.js?v=15"></script>
+
+
       </body>
       
       </html>
